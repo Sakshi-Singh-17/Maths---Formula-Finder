@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathsApp – Formula Finder</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: #0f0f0f;
+        color: white;
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        z-index: 10;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 600px;
+        background: #1c1c1cdd;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px #00eaff;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        border-radius: 6px;
+        border: none;
+        outline: none;
+        margin-bottom: 15px;
+    }
+
+    button {
+        padding: 12px;
+        background: #00bfff;
+        color: black;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #00eaff;
+    }
+
+    #output {
+        margin-top: 20px;
+        font-size: 20px;
+        padding: 15px;
+        background: #121212cc;
+        border-radius: 6px;
+        min-height: 40px;
+        border-left: 4px solid #00eaff;
+        word-wrap: break-word;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 1.5em;
+        }
+        input, button {
+            font-size: 16px;
+        }
+        #output {
+            font-size: 16px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<h1>📘 MathsApp – Formula Finder</h1>
+
+<div class="container">
+    <input type="text" id="userInput" placeholder="Type: area of rectangle, derivative of sin..." />
+    <button onclick="processInput()">Get Formula</button>
+    <div id="output"></div>
+</div>
+
+<script>
+
+
+// --------------------- MATHS FORMULA LOGIC ---------------------
+function maths_formulas(user_input){
+    user_input = user_input.toLowerCase();
+    const words = user_input.split(/\s+/);
+
+    // ---------------- GEOMETRY (CLASS 6–10) ----------------
+    if (words.includes('rectangle') && words.includes('perimeter'))
+        return "Perimeter of Rectangle = 2 * (length + breadth)";
+    else if (words.includes('rectangle') && words.includes('area'))
+        return "Area of Rectangle = length * breadth";
+    else if (words.includes('square') && words.includes('perimeter'))
+        return "Perimeter of Square = 4 * side";
+    else if (words.includes('square') && words.includes('area'))
+        return "Area of Square = side²";
+    else if (words.includes('circle') && words.includes('area'))
+        return "Area of Circle = π * radius²";
+    else if (words.includes('circle') && (words.includes('circumference') || words.includes('perimeter')))
+        return "Circumference of Circle = 2 * π * radius";
+    else if (words.includes('triangle') && words.includes('area'))
+        return "Area of Triangle = 0.5 * base * height";
+    else if (words.includes('parallelogram') && words.includes('area'))
+        return "Area = base * height";
+    else if (words.includes('trapezium') && words.includes('area'))
+        return "Area = 0.5 * (sum of parallel sides) * height";
+    else if (words.includes('rhombus') && words.includes('area'))
+        return "Area = 0.5 * d1 * d2";
+    else if (words.includes('cube') && words.includes('volume'))
+        return "Volume = side³";
+    else if (words.includes('cuboid') && words.includes('volume'))
+        return "Volume = length * breadth * height";
+    else if (words.includes('sphere') && words.includes('volume'))
+        return "Volume = (4/3) * π * radius³";
+    else if (words.includes('cone') && words.includes('volume'))
+        return "Volume = (1/3) * π * radius² * height";
+    else if (words.includes('cylinder') && words.includes('volume'))
+        return "Volume = π * radius² * height";
+
+    // ------------ ADDITIONAL GEOMETRY (CLASS 11–12) ------------
+    else if (words.includes('equilateral') && words.includes('triangle') && words.includes('area'))
+        return "Area = (√3 / 4) * side²";
+    else if (user_input.includes('heron'))
+        return "Heron's Formula: Area = √(s(s-a)(s-b)(s-c)); s = (a+b+c)/2";
+    else if (words.includes('hemisphere') && words.includes('volume'))
+        return "Volume = (2/3) * π * r³";
+    else if (words.includes('hemisphere') && words.includes('surface'))
+        return "TSA = 3πr², CSA = 2πr²";
+
+    // ---------------- TRIGONOMETRY BASIC ----------------
+    else if (words.includes('tan'))
+        return "tanθ = sinθ / cosθ";
+    else if (words.includes('sec'))
+        return "secθ = 1 / cosθ";
+    else if (words.includes('cosec'))
+        return "cosecθ = 1 / sinθ";
+    else if (words.includes('cot'))
+        return "cotθ = cosθ / sinθ";
+    else if (user_input.includes('sin^2') && user_input.includes('cos^2'))
+        return "sin²θ + cos²θ = 1";
+
+    // ---------------- TRIGONOMETRY ADVANCED (11–12) ----------------
+    else if (user_input.includes('sin(a+b)') || user_input.includes('cos(a+b)') || words.includes('trigonometric'))
+        return "sin(A±B)=sinAcosB±cosAsinB,  cos(A±B)=cosAcosB∓sinAsinB";
+    else if (words.includes('double') || user_input.includes('2a'))
+        return "sin2A=2sinAcosA,  cos2A=1−2sin²A=2cos²A−1";
+    else if (words.includes('half') && words.includes('angle'))
+        return "sin(A/2)=√((1−cosA)/2), cos(A/2)=√((1+cosA)/2)";
+
+    // ---------------- ALGEBRA (11–12) ----------------
+    else if (user_input.includes('(a+b)^2'))
+        return "(a+b)² = a² + 2ab + b²";
+    else if (user_input.includes('(a-b)^2'))
+        return "(a−b)² = a² − 2ab + b²";
+    else if (user_input.includes('a^2 - b^2'))
+        return "a² − b² = (a+b)(a−b)";
+    else if (user_input.includes('(a+b)^3'))
+        return "(a+b)³ = a³ + b³ + 3ab(a+b)";
+    else if (user_input.includes('(a-b)^3'))
+        return "(a−b)³ = a³ − b³ − 3ab(a−b)";
+
+    // ---------------- SEQUENCES & SERIES ----------------
+    else if (words.includes('ap') && words.includes('nth'))
+        return "Nth term of AP = a + (n-1)d";
+    else if (words.includes('ap') && words.includes('sum'))
+        return "Sum of AP = (n/2)*(2a + (n-1)d)";
+    else if (words.includes('gp') && words.includes('nth'))
+        return "Nth term of GP = ar^(n-1)";
+    else if (words.includes('gp') && words.includes('sum'))
+        return "Sum of GP (finite) = a*(r^n - 1)/(r - 1)";
+
+    // ---------------- CALCULUS: LIMITS ----------------
+    else if (words.includes('limit') && user_input.includes('sinx/x'))
+        return "lim (sinx/x) as x→0 = 1";
+    else if (words.includes('limit') && user_input.includes('1-cos'))
+        return "lim (1 - cosx)/x² as x→0 = 1/2";
+
+    // ---------------- CALCULUS: DERIVATIVES ----------------
+    else if (words.includes('derivative') && user_input.includes('x^n'))
+        return "d(x^n)/dx = n*x^(n-1)";
+    else if (words.includes('derivative') && words.includes('sin'))
+        return "d(sin x)/dx = cos x";
+    else if (words.includes('derivative') && words.includes('cos'))
+        return "d(cos x)/dx = -sin x";
+    else if (words.includes('derivative') && words.includes('tan'))
+        return "d(tan x)/dx = sec² x";
+    else if (words.includes('product') && words.includes('rule'))
+        return "(uv)' = u'v + uv'";
+    else if (words.includes('quotient') && words.includes('rule'))
+        return "(u/v)' = (u'v - uv')/v²";
+    else if (words.includes('chain') && words.includes('rule'))
+        return "dy/dx = (dy/du)*(du/dx)";
+
+    // ---------------- CALCULUS: INTEGRATION ----------------
+    else if (words.includes('integrate') && user_input.includes('x^n'))
+        return "∫x^n dx = x^(n+1)/(n+1) + C";
+    else if (words.includes('integrate') && user_input.includes('1/x'))
+        return "∫1/x dx = ln|x| + C";
+    else if (words.includes('integrate') && words.includes('sin'))
+        return "∫sin x dx = -cos x + C";
+    else if (words.includes('integrate') && words.includes('cos'))
+        return "∫cos x dx = sin x + C";
+    else if (words.includes('integrate') && user_input.includes('sec^2'))
+        return "∫sec²x dx = tan x + C";
+
+    // ---------------- COMPLEX NUMBERS (11–12) ----------------
+    else if (words.includes('modulus'))
+        return "|z| = √(x² + y²)";
+    else if (words.includes('argument'))
+        return "arg(z) = tan⁻¹(y/x)";
+    else if (words.includes('conjugate'))
+        return "z̄ = x - iy";
+    else if (words.includes('euler'))
+        return "Euler’s Formula: e^(iθ) = cosθ + i sinθ";
+
+    // ---------------- PERMUTATION & COMBINATION ----------------
+    else if (user_input.includes('npr'))
+        return "nPr = n! / (n-r)!";
+    else if (user_input.includes('ncr'))
+        return "nCr = n! / (r!(n-r)!)";
+
+    // ---------------- BINOMIAL THEOREM ----------------
+    else if (words.includes('binomial'))
+        return "(a+b)^n = Σ[nCk * a^(n-k) * b^k]";
+
+    // ---------------- COORDINATE GEOMETRY ----------------
+    else if (words.includes('distance'))
+        return "Distance = √((x2-x1)² + (y2-y1)²)";
+    else if (words.includes('midpoint'))
+        return "Midpoint = ((x1+x2)/2, (y1+y2)/2)";
+    else if (words.includes('section'))
+        return "((mx2+nx1)/(m+n), (my2+ny1)/(m+n))";
+    else if (words.includes('centroid'))
+        return "Centroid = ((x1+x2+x3)/3 , (y1+y2+y3)/3)";
+    else if (words.includes('triangle') && words.includes('coordinate'))
+        return "Area = 0.5|x1(y2-y3)+x2(y3-y1)+x3(y1-y2)|";
+
+    // ---------------- VECTORS & 3D GEOMETRY ----------------
+    else if (words.includes('vector') && words.includes('magnitude'))
+        return "|a| = √(a1² + a2² + a3²)";
+    else if (words.includes('dot'))
+        return "a·b = a1b1 + a2b2 + a3b3";
+    else if (words.includes('cross'))
+        return "|a×b| = |a||b| sinθ";
+    else if (words.includes('plane'))
+        return "ax + by + cz + d = 0";
+
+    // ---------------- GREETINGS ----------------
+    else if (user_input.includes("hello") || user_input.includes("hi"))
+        return "Hello! How can I help you today?";
+    else if (user_input.includes("name"))
+        return "I am ChatBuddy, your Virtual Maths Assistant.";
+    else if (user_input.includes("bye"))
+        return "Goodbye! Have a great day!";
+
+    // ---------------- DEFAULT ----------------
+    else
+        return "I’m not fully sure, but I am learning every day!";
+}
+
+function processInput(){
+    const input = document.getElementById("userInput").value;
+    document.getElementById("output").textContent = maths_formulas(input);
+}
+
+document.getElementById("userInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter") processInput();
+});
+</script>
+
+</body>
+</html>
